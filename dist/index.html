@@ -63,8 +63,9 @@
           daysUntilChristmas + (daysUntilChristmas === 1 ? " day" : " days");
       }
 
-      // Run immediately, then refresh once a day
+      // Run immediately, then refresh once a minute
       updateCountdown();
+      setInterval(updateCountdown, 1000 * 60);
     </script>
   </body>
 </html>
