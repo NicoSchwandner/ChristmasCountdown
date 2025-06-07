@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Days Until Christmas</title>
+
+    <!-- A tiny bit of styling to center the text -->
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* take up the full screen height */
+        margin: 0;
+        background: #f2f7ff; /* soft snowy blue */
+      }
+      h1 {
+        margin-bottom: 0.5rem;
+      }
+      #counter {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #cc0000; /* festive red */
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>How many days until Christmas?</h1>
+    <p id="counter">Loading…</p>
+
+    <script>
+      /* A helper that figures out the next Christmas date */
+      function getNextChristmas() {
+        const today = new Date(); // current date/time
+        const currentYear = today.getFullYear(); // e.g. 2025
+        let christmas = new Date(currentYear, 11, 24); // 11 = December
+
+        // If Christmas has already passed this year, aim for next year
+        if (today > christmas) {
+          christmas = new Date(currentYear + 1, 11, 24);
+        }
+        return christmas;
+      }
+
+      /* Main function that calculates and displays the remaining days */
+      function updateCountdown() {
+        const today = new Date();
+        const christmas = getNextChristmas();
+
+        // Difference in milliseconds → convert to days
+        const msPerDay = 1000 * 60 * 60 * 24;
+        const msUntilChristmas = christmas - today;
+        const daysUntilChristmasFraction = msUntilChristmas / msPerDay;
+        // Round up to the nearest whole day
+        // (e.g. 1.2 days becomes 2 days)
+        const daysUntilChristmas = Math.ceil(daysUntilChristmasFraction);
+
+        // Show the result
+        document.getElementById("counter").textContent =
+          daysUntilChristmas + (daysUntilChristmas === 1 ? " day" : " days");
+      }
+
+      // Run immediately, then refresh once a day
+      updateCountdown();
+    </script>
+  </body>
+</html>
